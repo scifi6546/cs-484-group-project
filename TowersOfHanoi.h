@@ -52,6 +52,8 @@ class TowersOfHanoi
         // tower other than the starting tower.
         bool winner();
 
+        void printBoard();
+
     private:
         //The data structure type of the board
         using BoardType = std::vector<std::stack<unsigned int>>;
