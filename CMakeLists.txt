@@ -9,6 +9,6 @@ set(BIN_DIR ${towers_of_hanoi_SOURCE_DIR}/bin)
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIR})
 
-add_executable(towers_of_hanoi main.cpp TowersOfHanoi.cpp)
+add_executable(towers_of_hanoi main.cpp TowersOfHanoi.cpp tiny_obj_loader.cc)
 target_link_libraries(towers_of_hanoi ${SDL2_LIBRARY})
 install(TARGETS towers_of_hanoi RUNTIME DESTINATION ${BIN_DIR})

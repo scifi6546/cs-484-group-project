@@ -1,6 +1,7 @@
 #include <iostream>
 #include <SDL.h>
 #include "TowersOfHanoi.h"
+#include "tiny_obj_loader.h"
 
 using std::cout;
 using std::endl;
