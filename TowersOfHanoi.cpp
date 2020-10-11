@@ -108,3 +108,8 @@ void TowersOfHanoi::printBoard()
     }
     cout << endl;
 }
+
+TowersOfHanoi::BoardType TowersOfHanoi::getBoard()
+{
+    return _board;
+}

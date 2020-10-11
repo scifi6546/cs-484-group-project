@@ -15,6 +15,9 @@
 class TowersOfHanoi
 {
     public:
+        //The data structure type of the board
+        using BoardType = std::vector<std::stack<unsigned int>>;
+
         // MoveRingResult
         // All the possible return states of the moveRing function
         enum class MoveRingResult
@@ -54,9 +57,9 @@ class TowersOfHanoi
 
         void printBoard();
 
+        BoardType getBoard();
+
     private:
-        //The data structure type of the board
-        using BoardType = std::vector<std::stack<unsigned int>>;
 
         BoardType _board;
         unsigned int _numberOfRings;
