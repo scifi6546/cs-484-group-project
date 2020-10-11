@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include "TowersOfHanoi.h"
 #include "tiny_obj_loader.h"
+#include "Graphics.h"
 
 using std::cout;
 using std::endl;
@@ -9,7 +10,7 @@ using std::endl;
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 
-int main(int, char**){
+int main(int, char**) {
 
     SDL_Window * window = nullptr;
 
@@ -19,13 +20,7 @@ int main(int, char**){
     }
     else
     {
-        window = SDL_CreateWindow("Empty Window", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-        if (window == nullptr)
-        {
-            cout << "Window not created! Error: " << SDL_GetError() << endl;
-        }
-
-        SDL_UpdateWindowSurface(window);
+        Graphics graphics("Towers of Hanoi");
 
         bool quit = false;
         SDL_Event e;
@@ -39,9 +34,6 @@ int main(int, char**){
                 }
             }
         }
-
-        SDL_DestroyWindow(window);
-        window = nullptr;
     }
 
     SDL_Quit();
