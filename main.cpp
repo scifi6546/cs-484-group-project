@@ -7,12 +7,20 @@
 using std::cout;
 using std::endl;
 
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+bool eventHandler(SDL_Event &e)
+{
+    while(SDL_PollEvent(&e) != 0)
+    {
+        if (e.type == SDL_QUIT)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
 
 int main(int, char**) {
-
-    SDL_Window * window = nullptr;
 
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
@@ -22,18 +30,8 @@ int main(int, char**) {
     {
         Graphics graphics("Towers of Hanoi");
 
-        bool quit = false;
         SDL_Event e;
-        while(!quit)
-        {
-            while(SDL_PollEvent(&e) != 0)
-            {
-                if (e.type == SDL_QUIT)
-                {
-                    quit = true;
-                }
-            }
-        }
+        while(!eventHandler(e)) {}
     }
 
     SDL_Quit();
