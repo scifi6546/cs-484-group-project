@@ -43,6 +43,7 @@ int main(int, char**) {
     }
     else
     {
+        TowersOfHanoi backend;
         Graphics graphics("Towers of Hanoi");
 
         SDL_Event e;
