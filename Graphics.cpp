@@ -17,8 +17,8 @@ using std::endl;
 
 Graphics::Graphics(const std::string& windowName)
 {
-    window = SDL_CreateWindow(windowName.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-    if (window == nullptr)
+    _window = SDL_CreateWindow(windowName.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    if (_window == nullptr)
     {
         cout << "Window not created! Error: " << SDL_GetError() << endl;
     }
@@ -26,8 +26,8 @@ Graphics::Graphics(const std::string& windowName)
 
 Graphics::~Graphics()
 {
-    SDL_DestroyWindow(window);
-    window = nullptr;
+    SDL_DestroyWindow(_window);
+    _window = nullptr;
 }
 
 void Graphics::display(TowersOfHanoi::BoardType board)

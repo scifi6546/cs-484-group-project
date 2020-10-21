@@ -22,7 +22,7 @@ public:
     void display(TowersOfHanoi::BoardType board);
 
 private:
-    SDL_Window * window = nullptr;
+    SDL_Window * _window = nullptr;
 };
 
 #endif //TOWERS_OF_HANOI_GRAPHICS_H
