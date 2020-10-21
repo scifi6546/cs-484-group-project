@@ -11,9 +11,24 @@ bool eventHandler(SDL_Event &e)
 {
     while(SDL_PollEvent(&e) != 0)
     {
-        if (e.type == SDL_QUIT)
+        switch (e.type)
         {
-            return true;
+            case SDL_QUIT:
+                return true;
+            case SDL_KEYDOWN:
+                switch (e.key.keysym.scancode)
+                {
+                    case SDL_SCANCODE_RETURN:
+                        cout << "Enter key pressed" << endl;
+                        break;
+                    case SDL_SCANCODE_A:
+                        cout << "A key pressed" << endl;
+                        break;
+                    case SDL_SCANCODE_D:
+                        cout << "D key pressed" << endl;
+                        break;
+                }
+                break;
         }
     }
 
