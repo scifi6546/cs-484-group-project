@@ -21,8 +21,13 @@ public:
 
     void display(TowersOfHanoi::BoardType board);
 
+    void selectLeft();
+
+    void selectRight();
+
 private:
     SDL_Window * _window = nullptr;
+    std::vector<int> _selectedTower;
 };
 
 #endif //TOWERS_OF_HANOI_GRAPHICS_H

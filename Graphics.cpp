@@ -15,7 +15,7 @@ using std::vector;
 using std::cout;
 using std::endl;
 
-Graphics::Graphics(const std::string& windowName)
+Graphics::Graphics(const std::string& windowName) : _selectedTower{0, 1, 2}
 {
     _window = SDL_CreateWindow(windowName.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     if (_window == nullptr)
@@ -65,4 +65,36 @@ void Graphics::display(TowersOfHanoi::BoardType board)
         cout << spaces;
     }
     cout << endl;
+
+    for (unsigned int tower = 0; tower < _selectedTower.size(); ++tower) {
+        if (_selectedTower.front() == tower)
+        {
+            cout << "^";
+        }
+        else
+        {
+            cout << " " << spaces;
+        }
+    }
+    cout << endl;
+}
+
+void Graphics::selectLeft()
+{
+    std::rotate
+    (
+            _selectedTower.begin(),
+            _selectedTower.end() - 1,
+            _selectedTower.end()
+    );
+}
+
+void Graphics::selectRight()
+{
+    std::rotate
+    (
+            _selectedTower.begin(),
+            _selectedTower.begin() + 1,
+            _selectedTower.end()
+    );
 }
