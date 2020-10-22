@@ -16,17 +16,23 @@ bool eventHandler(SDL_Event &e, TowersOfHanoi & backend, Graphics & frontend)
             case SDL_QUIT:
                 return true;
             case SDL_KEYDOWN:
-                switch (e.key.keysym.scancode)
+                if (e.key.keysym.scancode == SDL_SCANCODE_RETURN)
                 {
-                    case SDL_SCANCODE_RETURN:
-                        cout << "Selected tower " << frontend.getSelectedTower() << endl;
-                        break;
-                    case SDL_SCANCODE_A:
-                        frontend.selectLeft();
-                        break;
-                    case SDL_SCANCODE_D:
-                        frontend.selectRight();
-                        break;
+                    frontend.setTower();
+                    std::vector<unsigned int> markedTowers = frontend.getMarkedTowers();
+                    if (markedTowers.size() == 2)
+                    {
+                        backend.moveRing(markedTowers[0], markedTowers[1]);
+                        frontend.resetMarkedTowers();
+                    }
+                }
+                else if (e.key.keysym.scancode == SDL_SCANCODE_A)
+                {
+                    frontend.selectLeft();
+                }
+                else if (e.key.keysym.scancode == SDL_SCANCODE_D)
+                {
+                    frontend.selectRight();
                 }
                 frontend.display(backend.getBoard());
                 break;

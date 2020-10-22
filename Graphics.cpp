@@ -15,7 +15,7 @@ using std::vector;
 using std::cout;
 using std::endl;
 
-Graphics::Graphics(const std::string& windowName) : _selectedTower{0, 1, 2}
+Graphics::Graphics(const std::string& windowName) : _selectedTower{0, 1, 2}, _fromTower{-1}, _toTower{-1}
 {
     _window = SDL_CreateWindow(windowName.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     if (_window == nullptr)
@@ -99,7 +99,36 @@ void Graphics::selectRight()
     );
 }
 
-unsigned int Graphics::getSelectedTower()
+void Graphics::setTower()
 {
-    return _selectedTower.front();
+    if (_fromTower < 0)
+    {
+        _fromTower = _selectedTower.front();
+    }
+    else
+    {
+        _toTower = _selectedTower.front();
+    }
+}
+
+std::vector<unsigned int> Graphics::getMarkedTowers() const
+{
+    std::vector<unsigned int> result;
+    if(_fromTower >= 0)
+    {
+        result.push_back(_fromTower);
+    }
+
+    if (_toTower >= 0)
+    {
+        result.push_back(_toTower);
+    }
+
+    return result;
+}
+
+void Graphics::resetMarkedTowers()
+{
+    _fromTower = -1;
+    _toTower = -1;
 }

@@ -25,11 +25,17 @@ public:
 
     void selectRight();
 
-    unsigned int getSelectedTower();
+    void setTower();
+
+    [[nodiscard]] std::vector<unsigned int> getMarkedTowers() const;
+
+    void resetMarkedTowers();
 
 private:
     SDL_Window * _window = nullptr;
     std::vector<int> _selectedTower;
+    int _fromTower;
+    int _toTower;
 };
 
 #endif //TOWERS_OF_HANOI_GRAPHICS_H
