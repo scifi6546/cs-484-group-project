@@ -25,6 +25,8 @@ public:
 
     void selectRight();
 
+    unsigned int getSelectedTower();
+
 private:
     SDL_Window * _window = nullptr;
     std::vector<int> _selectedTower;

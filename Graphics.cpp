@@ -98,3 +98,8 @@ void Graphics::selectRight()
             _selectedTower.end()
     );
 }
+
+unsigned int Graphics::getSelectedTower()
+{
+    return _selectedTower.front();
+}

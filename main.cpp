@@ -19,7 +19,7 @@ bool eventHandler(SDL_Event &e, TowersOfHanoi & backend, Graphics & frontend)
                 switch (e.key.keysym.scancode)
                 {
                     case SDL_SCANCODE_RETURN:
-                        cout << "Enter key pressed" << endl;
+                        cout << "Selected tower " << frontend.getSelectedTower() << endl;
                         break;
                     case SDL_SCANCODE_A:
                         frontend.selectLeft();
