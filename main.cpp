@@ -7,7 +7,7 @@
 using std::cout;
 using std::endl;
 
-bool eventHandler(SDL_Event &e)
+bool eventHandler(SDL_Event &e, TowersOfHanoi & backend, Graphics & frontend)
 {
     while(SDL_PollEvent(&e) != 0)
     {
@@ -22,12 +22,13 @@ bool eventHandler(SDL_Event &e)
                         cout << "Enter key pressed" << endl;
                         break;
                     case SDL_SCANCODE_A:
-                        cout << "A key pressed" << endl;
+                        frontend.selectLeft();
                         break;
                     case SDL_SCANCODE_D:
-                        cout << "D key pressed" << endl;
+                        frontend.selectRight();
                         break;
                 }
+                frontend.display(backend.getBoard());
                 break;
         }
     }
@@ -45,9 +46,10 @@ int main(int, char**) {
     {
         TowersOfHanoi backend;
         Graphics graphics("Towers of Hanoi");
+        graphics.display(backend.getBoard());
 
         SDL_Event e;
-        while(!eventHandler(e)) {}
+        while(!eventHandler(e, backend, graphics)) {}
     }
 
     SDL_Quit();
