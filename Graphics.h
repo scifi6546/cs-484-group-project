@@ -27,6 +27,8 @@ public:
 
     void setTower();
 
+    void displayWinOrLose(bool winner);
+
     [[nodiscard]] std::vector<unsigned int> getMarkedTowers() const;
 
     void resetMarkedTowers();

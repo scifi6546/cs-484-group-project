@@ -34,7 +34,13 @@ bool eventHandler(SDL_Event &e, TowersOfHanoi & backend, Graphics & frontend)
                 {
                     frontend.selectRight();
                 }
+
                 frontend.display(backend.getBoard());
+
+                if (e.key.keysym.scancode == SDL_SCANCODE_W)
+                {
+                    frontend.displayWinOrLose(backend.winner());
+                }
                 break;
         }
     }

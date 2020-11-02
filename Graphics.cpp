@@ -132,3 +132,15 @@ void Graphics::resetMarkedTowers()
     _fromTower = -1;
     _toTower = -1;
 }
+
+void Graphics::displayWinOrLose(bool winner)
+{
+    if (winner)
+    {
+        cout << "You won!" << endl;
+    }
+    else
+    {
+        cout << "You haven't won yet, keep going!" << endl;
+    }
+}
