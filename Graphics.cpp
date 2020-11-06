@@ -32,9 +32,7 @@ Graphics::~Graphics()
 
 void Graphics::display(TowersOfHanoi::BoardType board)
 {
-    cout << "ENTER to pick up a ring" << endl;
-    cout << "ENTER to put it on a tower" << endl;
-    cout << "A and D to move left and right" << endl;
+    printInstructions();
     cout << endl;
 
     string spaces = "       ";
@@ -163,4 +161,11 @@ bool Graphics::getMenuStatus() {
 
 void Graphics::setMenuStatus(bool value) {
     _menu.setMenuStatus(value);
+}
+
+void Graphics::printInstructions()
+{
+    cout << "ENTER to pick up a ring" << endl;
+    cout << "ENTER again to put it on a tower" << endl;
+    cout << "A and D to move left and right" << endl;
 }

@@ -42,6 +42,8 @@ public:
 
     void setMenuStatus(bool);
 
+    void printInstructions();
+
 private:
     SDL_Window * _window = nullptr;
     Menu _menu;
