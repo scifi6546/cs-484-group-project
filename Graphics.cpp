@@ -32,6 +32,11 @@ Graphics::~Graphics()
 
 void Graphics::display(TowersOfHanoi::BoardType board)
 {
+    cout << "ENTER to pick up a ring" << endl;
+    cout << "ENTER to put it on a tower" << endl;
+    cout << "A and D to move left and right" << endl;
+    cout << endl;
+
     string spaces = "       ";
 
     vector<unsigned int> heights;
