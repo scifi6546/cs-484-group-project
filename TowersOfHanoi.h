@@ -6,7 +6,8 @@
 #define TOWERS_OF_HANOI_TOWERSOFHANOI_H
 
 #include <vector>
-#include <stack>
+#include "Tower.h"
+#include "Ring.h"
 
 // TowersOfHanoi
 // A class that can be used to play Towers of Hanoi
@@ -16,7 +17,7 @@ class TowersOfHanoi
 {
     public:
         //The data structure type of the board
-        using BoardType = std::vector<std::stack<unsigned int>>;
+        using BoardType = std::vector<Tower>;
 
         // MoveRingResult
         // All the possible return states of the moveRing function
@@ -35,7 +36,7 @@ class TowersOfHanoi
         // 2-param ctor
         // Takes the desired number of rings and towers
         // Starts with the rings on the 0-th tower
-        TowersOfHanoi(unsigned int numOfRings, unsigned int numOfTowers);
+        TowersOfHanoi(int numOfRings, int numOfTowers);
 
         // resetGame
         // resets the game to the starting conditions
@@ -55,15 +56,15 @@ class TowersOfHanoi
         // tower other than the starting tower.
         bool winner();
 
-        void printBoard();
+//        void printBoard();
 
         BoardType getBoard();
 
     private:
 
+        int _numberOfRings;
+        int _numberOfTowers;
         BoardType _board;
-        unsigned int _numberOfRings;
-        unsigned int _numberOfTowers;
 };
 
 

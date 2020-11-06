@@ -8,6 +8,7 @@
 #include <string>
 #include "TowersOfHanoi.h"
 #include "SDL.h"
+#include "Menu.h"
 
 class Graphics
 {
@@ -33,11 +34,21 @@ public:
 
     void resetMarkedTowers();
 
+    void displayMenu();
+
+    void closeMenu();
+
+    bool getMenuStatus();
+
+    void setMenuStatus(bool);
+
 private:
     SDL_Window * _window = nullptr;
+    Menu _menu;
     std::vector<int> _selectedTower;
     int _fromTower;
     int _toTower;
+
 };
 
 #endif //TOWERS_OF_HANOI_GRAPHICS_H

@@ -37,17 +37,17 @@ void Graphics::display(TowersOfHanoi::BoardType board)
     vector<unsigned int> heights;
     for (const auto & tower : board)
     {
-        heights.push_back(tower.size());
+        heights.push_back(tower.getNumberOfRings());
     }
     unsigned int height = *std::max_element(heights.begin(), heights.end());
-    while(!std::all_of(board.begin(), board.end(), [](auto a) {return a.empty();}))
+    while(!std::all_of(board.begin(), board.end(), [](auto a) {return a.isEmpty();}))
     {
         for (auto & tower : board)
         {
-            if (!tower.empty() && tower.size() == height)
+            if (!tower.isEmpty() && tower.getNumberOfRings() == height)
             {
-                cout << tower.top();
-                tower.pop();
+                cout << tower.atTop().getValue();
+                tower.removeRing();
             }
             else
             {
@@ -143,4 +143,19 @@ void Graphics::displayWinOrLose(bool winner)
     {
         cout << "You haven't won yet, keep going!" << endl;
     }
+}
+
+void Graphics::displayMenu() {
+    _menu.displayMenuScreen();
+}
+void Graphics::closeMenu() {
+    _menu.closeMenuScreen();
+}
+
+bool Graphics::getMenuStatus() {
+    return _menu.getMenuStatus();
+}
+
+void Graphics::setMenuStatus(bool value) {
+    _menu.setMenuStatus(value);
 }
