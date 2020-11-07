@@ -8,6 +8,7 @@
 #include <iostream>
 #include "TowersOfHanoi.h"
 #include "Graphics.h"
+#include <SDL_image.h>
 
 
 using std::string;
@@ -22,10 +23,30 @@ Graphics::Graphics(const std::string& windowName) : _selectedTower{0, 1, 2}, _fr
     {
         cout << "Window not created! Error: " << SDL_GetError() << endl;
     }
+    else
+    {
+        int imgFlags = IMG_INIT_PNG;
+        if (!(IMG_Init(imgFlags) & imgFlags))
+        {
+            cout << "Could not imitialize SDL_image: " << IMG_GetError() << endl;
+        }
+        else
+        {
+            _screenSurface = SDL_GetWindowSurface(_window);
+        }
+    }
+
+    _instructions = loadPNG("../media/instructions.png");
+    if (_instructions == nullptr)
+    {
+        cout << "Unable to load instructions layer: " << SDL_GetError() << endl;
+    }
 }
 
 Graphics::~Graphics()
 {
+    SDL_FreeSurface(_instructions);
+    _instructions = nullptr;
     SDL_DestroyWindow(_window);
     _window = nullptr;
 }
@@ -80,6 +101,8 @@ void Graphics::display(TowersOfHanoi::BoardType board)
         }
     }
     cout << endl;
+
+    SDL_UpdateWindowSurface(_window);
 }
 
 void Graphics::selectLeft()
@@ -168,4 +191,29 @@ void Graphics::printInstructions()
     cout << "ENTER to pick up a ring" << endl;
     cout << "ENTER again to put it on a tower" << endl;
     cout << "A and D to move left and right" << endl;
+
+    SDL_BlitSurface(_instructions, nullptr, _screenSurface, nullptr);
+}
+
+SDL_Surface * Graphics::loadPNG(const std::string& path )
+{
+    SDL_Surface* optimizedSurface = nullptr;
+
+    SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
+    if( loadedSurface == nullptr )
+    {
+        cout << "Unable to load image " << path << ": " << IMG_GetError() << endl;
+    }
+    else
+    {
+        optimizedSurface = SDL_ConvertSurface( loadedSurface, _screenSurface->format, 0 );
+        if( optimizedSurface == nullptr )
+        {
+            cout << "Unable to optimize image " << path << ": " << SDL_GetError() << endl;
+        }
+
+        SDL_FreeSurface( loadedSurface );
+    }
+
+    return optimizedSurface;
 }

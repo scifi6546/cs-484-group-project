@@ -44,8 +44,12 @@ public:
 
     void printInstructions();
 
+    SDL_Surface * loadPNG(const std::string &path);
+
 private:
     SDL_Window * _window = nullptr;
+    SDL_Surface * _screenSurface = nullptr;
+    SDL_Surface * _instructions = nullptr;
     Menu _menu;
     std::vector<int> _selectedTower;
     int _fromTower;
