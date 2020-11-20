@@ -25,34 +25,43 @@ Graphics::Graphics(const std::string& windowName) : _selectedTower{0, 1, 2}, _fr
     }
     else
     {
-        int imgFlags = IMG_INIT_PNG;
-        if (!(IMG_Init(imgFlags) & imgFlags))
+        _renderer = SDL_CreateRenderer( _window, -1, SDL_RENDERER_ACCELERATED );
+        if (!_renderer)
         {
-            cout << "Could not imitialize SDL_image: " << IMG_GetError() << endl;
+            cout << "Renderer not created! Error: " << SDL_GetError() << endl;
         }
         else
         {
-            _screenSurface = SDL_GetWindowSurface(_window);
+            int imgFlags = IMG_INIT_PNG;
+            if (!(IMG_Init(imgFlags) & imgFlags))
+            {
+                cout << "Could not imitialize SDL_image: " << IMG_GetError() << endl;
+            }
         }
     }
 
-    _instructions = loadPNG("../media/instructions.png");
-    if (_instructions == nullptr)
-    {
-        cout << "Unable to load instructions layer: " << SDL_GetError() << endl;
-    }
+    textures.insert({"instructions", loadTexture("../media/instructions.png")});
 }
 
 Graphics::~Graphics()
 {
-    SDL_FreeSurface(_instructions);
-    _instructions = nullptr;
+    for (auto & [name, texture] : textures)
+    {
+        SDL_DestroyTexture(texture);
+        texture = nullptr;
+    }
+
+    SDL_DestroyRenderer(_renderer);
+    _renderer = nullptr;
     SDL_DestroyWindow(_window);
     _window = nullptr;
 }
 
 void Graphics::display(TowersOfHanoi::BoardType board)
 {
+    SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 0xFF);
+    SDL_RenderClear(_renderer);
+
     printInstructions();
     cout << endl;
 
@@ -102,7 +111,7 @@ void Graphics::display(TowersOfHanoi::BoardType board)
     }
     cout << endl;
 
-    SDL_UpdateWindowSurface(_window);
+    SDL_RenderPresent(_renderer);
 }
 
 void Graphics::selectLeft()
@@ -192,28 +201,28 @@ void Graphics::printInstructions()
     cout << "ENTER again to put it on a tower" << endl;
     cout << "A and D to move left and right" << endl;
 
-    SDL_BlitSurface(_instructions, nullptr, _screenSurface, nullptr);
+    SDL_RenderCopy(_renderer, textures.at("instructions"), nullptr, nullptr);
 }
 
-SDL_Surface * Graphics::loadPNG(const std::string& path )
+SDL_Texture * Graphics::loadTexture(const std::string& path )
 {
-    SDL_Surface* optimizedSurface = nullptr;
+    SDL_Texture * texture = nullptr;
 
-    SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
+    SDL_Surface * loadedSurface = IMG_Load( path.c_str() );
     if( loadedSurface == nullptr )
     {
         cout << "Unable to load image " << path << ": " << IMG_GetError() << endl;
     }
     else
     {
-        optimizedSurface = SDL_ConvertSurface( loadedSurface, _screenSurface->format, 0 );
-        if( optimizedSurface == nullptr )
+        texture = SDL_CreateTextureFromSurface(_renderer, loadedSurface);
+        if( texture == nullptr )
         {
-            cout << "Unable to optimize image " << path << ": " << SDL_GetError() << endl;
+            cout << "Unable to create texture from " << path << ": " << SDL_GetError() << endl;
         }
 
         SDL_FreeSurface( loadedSurface );
     }
 
-    return optimizedSurface;
+    return texture;
 }

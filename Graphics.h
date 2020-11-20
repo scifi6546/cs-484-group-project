@@ -6,6 +6,7 @@
 #define TOWERS_OF_HANOI_GRAPHICS_H
 
 #include <string>
+#include <map>
 #include "TowersOfHanoi.h"
 #include "SDL.h"
 #include "Menu.h"
@@ -44,12 +45,13 @@ public:
 
     void printInstructions();
 
-    SDL_Surface * loadPNG(const std::string &path);
+    SDL_Texture * loadTexture(const std::string &path);
 
 private:
     SDL_Window * _window = nullptr;
     SDL_Surface * _screenSurface = nullptr;
-    SDL_Surface * _instructions = nullptr;
+    std::map<std::string, SDL_Texture *> textures{};
+    SDL_Renderer * _renderer = nullptr;
     Menu _menu;
     std::vector<int> _selectedTower;
     int _fromTower;
