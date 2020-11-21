@@ -59,11 +59,13 @@ Graphics::~Graphics()
 
 void Graphics::display(TowersOfHanoi::BoardType board)
 {
-    SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 0xFF);
+    SDL_SetRenderDrawColor(_renderer, 0x66, 0x66, 0x66, 0xFF);
     SDL_RenderClear(_renderer);
 
     printInstructions();
     cout << endl;
+
+    displayBoard();
 
     string spaces = "       ";
 
@@ -75,16 +77,22 @@ void Graphics::display(TowersOfHanoi::BoardType board)
     unsigned int height = *std::max_element(heights.begin(), heights.end());
     while(!std::all_of(board.begin(), board.end(), [](auto a) {return a.isEmpty();}))
     {
+        int towerPos = 3;
         for (auto & tower : board)
         {
             if (!tower.isEmpty() && tower.getNumberOfRings() == height)
             {
+                displayRing(height, towerPos, tower.atTop());
+
+                towerPos += 5;
+
                 cout << tower.atTop().getValue();
                 tower.removeRing();
             }
             else
             {
                 cout << " ";
+                towerPos += 5;
             }
             cout << spaces;
         }
@@ -112,6 +120,19 @@ void Graphics::display(TowersOfHanoi::BoardType board)
     cout << endl;
 
     SDL_RenderPresent(_renderer);
+}
+
+void Graphics::displayRing(unsigned int height, int towerPos, Ring ring) const
+{
+    SDL_Color ringColor = {0x74, 0x43, 0x00, 0xFF};
+    int maxRingWidth = SCREEN_WIDTH / 4;
+    int ringWidth = maxRingWidth / 8 * ring.getValue();
+    int halfRingWidth = ringWidth / 2;
+    int ringHeight = SCREEN_HEIGHT / 32;
+
+    SDL_Rect ringRect = {SCREEN_WIDTH / 16 * towerPos - halfRingWidth, static_cast<int>(SCREEN_HEIGHT / 32 * (8 - height + 20)), ringWidth, ringHeight };
+    SDL_SetRenderDrawColor(_renderer, ringColor.r, ringColor.g, ringColor.b, ringColor.a );
+    SDL_RenderFillRect(_renderer, &ringRect );
 }
 
 void Graphics::selectLeft()
@@ -225,4 +246,26 @@ SDL_Texture * Graphics::loadTexture(const std::string& path )
     }
 
     return texture;
+}
+
+void Graphics::displayBoard()
+{
+    SDL_Color boardColor = {0x00, 0x00, 0x00, 0xFF};
+
+    //Base of the board
+    SDL_Rect base = { 0, SCREEN_HEIGHT / 8 * 7, SCREEN_WIDTH, SCREEN_HEIGHT / 16 };
+    SDL_SetRenderDrawColor( _renderer, boardColor.r, boardColor.g, boardColor.b, boardColor.a );
+    SDL_RenderFillRect( _renderer, &base );
+
+    //Columns
+    auto towerWidth = SCREEN_WIDTH / 64;
+    auto towerHeight = SCREEN_HEIGHT / 8 * 3;
+    auto halfTowerWidth = towerWidth / 2;
+
+    for (int towerPos = 3; towerPos <= 13; towerPos +=  5)
+    {
+        SDL_Rect tower = {SCREEN_WIDTH / 16 * towerPos - halfTowerWidth, SCREEN_HEIGHT / 16 * 9, towerWidth, towerHeight };
+        SDL_SetRenderDrawColor( _renderer, boardColor.r, boardColor.g, boardColor.b, boardColor.a );
+        SDL_RenderFillRect( _renderer, &tower );
+    }
 }
