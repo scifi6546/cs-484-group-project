@@ -49,6 +49,8 @@ public:
 
     void displayBoard();
 
+    void displayMarker(int towerPos);
+
 private:
     SDL_Window * _window = nullptr;
     SDL_Surface * _screenSurface = nullptr;
