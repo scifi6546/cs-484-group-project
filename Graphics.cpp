@@ -40,7 +40,8 @@ Graphics::Graphics(const std::string& windowName) : _selectedTowerIndices{0, 1, 
         }
     }
 
-    textures.insert({"instructions", loadTexture("./media/instructions.png")});
+    textures.insert({"instructions", loadTexture("../media/instructions.png")});
+    textures.insert({"marker", loadTexture("../media/marker.png")});
     textures.insert({"pauseScreen", loadTexture("./media/pauseScreen.png")});
 }
 
@@ -78,7 +79,7 @@ void Graphics::display(TowersOfHanoi::BoardType board)
     unsigned int height = *std::max_element(heights.begin(), heights.end());
     while(!std::all_of(board.begin(), board.end(), [](auto a) {return a.isEmpty();}))
     {
-        int towerPos = 3;
+        int towerPos = 0;
         for (auto & tower : board)
         {
             if (!tower.isEmpty() && tower.getNumberOfRings() == height)
@@ -94,7 +95,7 @@ void Graphics::display(TowersOfHanoi::BoardType board)
 
             }
             cout << spaces;
-            towerPos += 5;
+            towerPos++;
         }
         --height;
         cout << endl;
@@ -111,6 +112,7 @@ void Graphics::display(TowersOfHanoi::BoardType board)
         if (_selectedTowerIndices.front() == tower)
         {
             cout << "^";
+            displayMarker(static_cast<int>(tower));
         }
         else
         {
@@ -130,7 +132,7 @@ void Graphics::displayRing(unsigned int height, int towerPos, Ring ring) const
     int halfRingWidth = ringWidth / 2;
     int ringHeight = SCREEN_HEIGHT / 32;
 
-    SDL_Rect ringRect = {SCREEN_WIDTH / 16 * towerPos - halfRingWidth, static_cast<int>(SCREEN_HEIGHT / 32 * (8 - height + 20)), ringWidth, ringHeight };
+    SDL_Rect ringRect = {SCREEN_WIDTH / 16 * (3 + towerPos * 5) - halfRingWidth, static_cast<int>(SCREEN_HEIGHT / 32 * (8 - height + 20)), ringWidth, ringHeight };
     SDL_SetRenderDrawColor(_renderer, ringColor.r, ringColor.g, ringColor.b, ringColor.a );
     SDL_RenderFillRect(_renderer, &ringRect );
 }
@@ -307,4 +309,14 @@ void Graphics::displayBoard()
         SDL_SetRenderDrawColor( _renderer, boardColor.r, boardColor.g, boardColor.b, boardColor.a );
         SDL_RenderFillRect( _renderer, &tower );
     }
+}
+
+void Graphics::displayMarker(int towerPos)
+{
+    int markerWidth = SCREEN_HEIGHT / 20;
+    int markerHeight = markerWidth;
+    int halfMarkerWidth = markerWidth / 2;
+
+    SDL_Rect marker = {SCREEN_WIDTH / 16 * (3 + towerPos * 5) - halfMarkerWidth, SCREEN_HEIGHT / 16 * 15 + 5, markerWidth, markerHeight };
+    SDL_RenderCopy(_renderer, textures.at("marker"), nullptr, &marker);
 }

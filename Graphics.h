@@ -62,6 +62,8 @@ public:
 
     void displayBoard();
 
+    void displayMarker(int towerPos);
+
 private:
     SDL_Window * _window = nullptr;
     std::map<std::string, SDL_Texture *> textures{};
