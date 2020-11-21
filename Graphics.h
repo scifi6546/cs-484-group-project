@@ -60,6 +60,8 @@ public:
 
     SDL_Texture * loadTexture(const std::string &path);
 
+    void displayBoard();
+
 private:
     SDL_Window * _window = nullptr;
     std::map<std::string, SDL_Texture *> textures{};
@@ -69,6 +71,7 @@ private:
     int _fromTowerIndex;
     int _toTowerIndex;
 
+    void displayRing(unsigned int height, int towerPos, Ring ring) const;
 };
 
 #endif //TOWERS_OF_HANOI_GRAPHICS_H
