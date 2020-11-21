@@ -85,17 +85,16 @@ void Graphics::display(TowersOfHanoi::BoardType board)
             {
                 displayRing(height, towerPos, tower.atTop());
 
-                towerPos += 5;
-
                 cout << tower.atTop().getValue();
                 tower.removeRing();
             }
             else
             {
                 cout << " ";
-                towerPos += 5;
+
             }
             cout << spaces;
+            towerPos += 5;
         }
         --height;
         cout << endl;
