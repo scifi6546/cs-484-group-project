@@ -64,7 +64,6 @@ void Graphics::display(TowersOfHanoi::BoardType board)
     SDL_RenderClear(_renderer);
 
     printInstructions();
-    cout << endl;
 
     displayBoard();
 
@@ -94,45 +93,25 @@ void Graphics::display(TowersOfHanoi::BoardType board)
                     fromTower = tower;
                 }
 
-                cout << board[tower].atTop().getValue();
                 board[tower].removeRing();
             }
-            else
-            {
-                cout << " ";
 
-            }
-            cout << spaces;
             towerPos++;
         }
         --height;
-        cout << endl;
     }
     board = boardCopy;
-
-    for (int tower = 0; tower < board.size(); tower++)
-    {
-        cout << "-";
-        cout << spaces;
-    }
-    cout << endl;
 
     for (unsigned int tower = 0; tower < board.size(); ++tower) {
         if (board[tower].isSelected())
         {
-            cout << "^";
             displayMarker(static_cast<int>(tower));
             if (fromTower >= 0)
             {
                 displayRing(12, static_cast<int>(tower), board[fromTower].atTop());
             }
         }
-        else
-        {
-            cout << " " << spaces;
-        }
     }
-    cout << endl;
 
     SDL_RenderPresent(_renderer);
 }
@@ -179,10 +158,6 @@ void Graphics::setMenuStatus(bool value) {
 
 void Graphics::printInstructions()
 {
-    cout << "ENTER to pick up a ring" << endl;
-    cout << "ENTER again to put it on a tower" << endl;
-    cout << "A and D to move left and right" << endl;
-
     SDL_RenderCopy(_renderer, textures.at("instructions"), nullptr, nullptr);
 }
 
