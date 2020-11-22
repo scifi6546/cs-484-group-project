@@ -23,17 +23,7 @@ public:
 
     void display(TowersOfHanoi::BoardType board);
 
-    void selectLeft();
-
-    void selectRight();
-
-    void setTower();
-
     void displayWinOrLose(bool winner);
-
-    [[nodiscard]] std::vector<unsigned int> getMarkedTowers() const;
-
-    void resetMarkedTowers();
 
     void displayMenu();
 
@@ -53,13 +43,9 @@ public:
 
 private:
     SDL_Window * _window = nullptr;
-    SDL_Surface * _screenSurface = nullptr;
     std::map<std::string, SDL_Texture *> textures{};
     SDL_Renderer * _renderer = nullptr;
     Menu _menu;
-    std::vector<int> _selectedTower;
-    int _fromTower;
-    int _toTower;
 
     void displayRing(unsigned int y, int towerPos, Ring ring) const;
 };

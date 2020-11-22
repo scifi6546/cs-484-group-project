@@ -29,6 +29,5 @@ public:
 
 private:
     std::stack<Ring> _rings; //This will be have the length of _numberOfRings from TowersOfHanoi
-    bool _selected;
 };
 #endif //TOWERS_OF_HANOI_TOWER_H

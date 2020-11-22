@@ -15,6 +15,5 @@ public:
 
 private:
     int _valueOfRing;
-    bool _selected;
 };
 #endif //TOWERS_OF_HANOI_RING_H

@@ -16,7 +16,7 @@ using std::vector;
 using std::cout;
 using std::endl;
 
-Graphics::Graphics(const std::string& windowName) : _selectedTower{0, 1, 2}, _fromTower{-1}, _toTower{-1}
+Graphics::Graphics(const std::string& windowName)
 {
     _window = SDL_CreateWindow(windowName.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     if (_window == nullptr)
@@ -70,6 +70,7 @@ void Graphics::display(TowersOfHanoi::BoardType board)
 
     string spaces = "       ";
 
+    long fromTower = -1;
     auto boardCopy = board; //The big while loop down below trashes the board, save it and restore it after
     vector<unsigned int> heights;
     for (const auto & tower : board)
@@ -80,14 +81,21 @@ void Graphics::display(TowersOfHanoi::BoardType board)
     while(!std::all_of(board.begin(), board.end(), [](auto a) {return a.isEmpty();}))
     {
         int towerPos = 0;
-        for (auto & tower : board)
+        for (auto tower = 0u; tower < board.size(); ++tower)
         {
-            if (!tower.isEmpty() && tower.getNumberOfRings() == height)
+            if (!board[tower].isEmpty() && board[tower].getNumberOfRings() == height)
             {
-                displayRing((8 - height + 20), towerPos, tower.atTop());
+                if (!board[tower].atTop().isSelected())
+                {
+                    displayRing((8 - height + 20), towerPos, board[tower].atTop());
+                }
+                else
+                {
+                    fromTower = tower;
+                }
 
-                cout << tower.atTop().getValue();
-                tower.removeRing();
+                cout << board[tower].atTop().getValue();
+                board[tower].removeRing();
             }
             else
             {
@@ -109,14 +117,14 @@ void Graphics::display(TowersOfHanoi::BoardType board)
     }
     cout << endl;
 
-    for (unsigned int tower = 0; tower < _selectedTower.size(); ++tower) {
-        if (_selectedTower.front() == tower)
+    for (unsigned int tower = 0; tower < board.size(); ++tower) {
+        if (board[tower].isSelected())
         {
             cout << "^";
             displayMarker(static_cast<int>(tower));
-            if (_fromTower >= 0)
+            if (fromTower >= 0)
             {
-                displayRing(12, static_cast<int>(tower), board[_fromTower].atTop());
+                displayRing(12, static_cast<int>(tower), board[fromTower].atTop());
             }
         }
         else
@@ -140,60 +148,6 @@ void Graphics::displayRing(unsigned int y, int towerPos, Ring ring) const
     SDL_Rect ringRect = {SCREEN_WIDTH / 16 * (3 + towerPos * 5) - halfRingWidth, static_cast<int>(SCREEN_HEIGHT / 32 * y), ringWidth, ringHeight };
     SDL_SetRenderDrawColor(_renderer, ringColor.r, ringColor.g, ringColor.b, ringColor.a );
     SDL_RenderFillRect(_renderer, &ringRect );
-}
-
-void Graphics::selectLeft()
-{
-    std::rotate
-    (
-            _selectedTower.begin(),
-            _selectedTower.end() - 1,
-            _selectedTower.end()
-    );
-}
-
-void Graphics::selectRight()
-{
-    std::rotate
-    (
-            _selectedTower.begin(),
-            _selectedTower.begin() + 1,
-            _selectedTower.end()
-    );
-}
-
-void Graphics::setTower()
-{
-    if (_fromTower < 0)
-    {
-        _fromTower = _selectedTower.front();
-    }
-    else
-    {
-        _toTower = _selectedTower.front();
-    }
-}
-
-std::vector<unsigned int> Graphics::getMarkedTowers() const
-{
-    std::vector<unsigned int> result;
-    if(_fromTower >= 0)
-    {
-        result.push_back(_fromTower);
-    }
-
-    if (_toTower >= 0)
-    {
-        result.push_back(_toTower);
-    }
-
-    return result;
-}
-
-void Graphics::resetMarkedTowers()
-{
-    _fromTower = -1;
-    _toTower = -1;
 }
 
 void Graphics::displayWinOrLose(bool winner)
