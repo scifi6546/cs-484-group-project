@@ -305,7 +305,7 @@ void Graphics::displayBoard()
 
     for (int towerPos = 3; towerPos <= 13; towerPos +=  5)
     {
-        SDL_Rect tower = {SCREEN_WIDTH / 16 * towerPos - halfTowerWidth, SCREEN_HEIGHT / 16 * 9, towerWidth, towerHeight };
+        SDL_Rect tower = {SCREEN_WIDTH / 16 * towerPos - halfTowerWidth, SCREEN_HEIGHT / 32 * 18, towerWidth, towerHeight };
         SDL_SetRenderDrawColor( _renderer, boardColor.r, boardColor.g, boardColor.b, boardColor.a );
         SDL_RenderFillRect( _renderer, &tower );
     }
