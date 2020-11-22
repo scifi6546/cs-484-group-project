@@ -58,8 +58,8 @@ class TowersOfHanoi
         // tower other than the starting tower.
         bool winner();
 
-//        void printBoard();
-
+        // getBoard
+        // Returns a copy of the board
         BoardType getBoard();
 
         void restoreOldBoard(std::map<int, std::vector<int>>);
@@ -67,7 +67,6 @@ class TowersOfHanoi
 
 
     private:
-
         int _numberOfRings;
         int _numberOfTowers;
         BoardType _board;
