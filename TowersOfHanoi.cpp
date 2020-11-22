@@ -10,17 +10,21 @@ TowersOfHanoi::TowersOfHanoi(): TowersOfHanoi(8, 3)
 {}
 
 TowersOfHanoi::TowersOfHanoi(int numOfRings, int numOfTowers)
-    : _numberOfRings(numOfRings), _numberOfTowers(numOfTowers), _selectedTower(0), _board(numOfTowers)
+    : _numberOfRings(numOfRings),
+      _numberOfTowers(numOfTowers),
+      _selectedTower(0),
+      _fromTower(-1),
+      _board(numOfTowers)
 {
     for (int index = 0; index < _board.size(); index++) {
         if (index == 0) {
             _board[0] = Tower(numOfRings);
         } else {
             _board[index] = Tower(0);
-
         }
-
     }
+
+    _board[0].select();
 }
 
 void TowersOfHanoi::resetGame()
@@ -117,9 +121,29 @@ TowersOfHanoi::BoardType TowersOfHanoi::getBoard()
     return _board;
 }
 
-void TowersOfHanoi::selectRing(int tower)
+void TowersOfHanoi::selectRing()
 {
-    _board[tower].atTop().select();
+    if (_fromTower < 0 && !_board[_selectedTower].isEmpty())
+    {
+        _fromTower = _selectedTower;
+        auto ring = _board[_selectedTower].atTop();
+        _board[_selectedTower].removeRing();
+        ring.select();
+        _board[_selectedTower].addRing(ring);
+        _fromTower = _selectedTower;
+    }
+    else if (_fromTower >= 0)
+    {
+        auto result = moveRing(_fromTower, _selectedTower);
+        if (result == MoveRingResult::success)
+        {
+            auto ring = _board[_selectedTower].atTop();
+            _board[_selectedTower].removeRing();
+            ring.deselect();
+            _board[_selectedTower].addRing(ring);
+            _fromTower = -1;
+        }
+    }
 }
 
 void TowersOfHanoi::selectRight()

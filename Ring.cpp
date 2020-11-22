@@ -4,7 +4,7 @@
 
 #include "Ring.h"
 
-Ring::Ring(int value): _valueOfRing(value), _selected{false} {}
+Ring::Ring(int value): _valueOfRing(value) {}
 
 int Ring::getValue() const {
     return _valueOfRing;

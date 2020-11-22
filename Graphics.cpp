@@ -16,7 +16,7 @@ using std::vector;
 using std::cout;
 using std::endl;
 
-Graphics::Graphics(const std::string& windowName) : _selectedTowerIndices{0, 1, 2}, _fromTowerIndex{-1}, _toTowerIndex{-1}
+Graphics::Graphics(const std::string& windowName)
 {
     _window = SDL_CreateWindow(windowName.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     if (_window == nullptr)
@@ -71,6 +71,7 @@ void Graphics::display(TowersOfHanoi::BoardType board)
 
     string spaces = "       ";
 
+    long fromTower = -1;
     auto boardCopy = board; //The big while loop down below trashes the board, save it and restore it after
     vector<unsigned int> heights;
     for (const auto & tower : board)
@@ -81,14 +82,21 @@ void Graphics::display(TowersOfHanoi::BoardType board)
     while(!std::all_of(board.begin(), board.end(), [](auto a) {return a.isEmpty();}))
     {
         int towerPos = 0;
-        for (auto & tower : board)
+        for (auto tower = 0u; tower < board.size(); ++tower)
         {
-            if (!tower.isEmpty() && tower.getNumberOfRings() == height)
+            if (!board[tower].isEmpty() && board[tower].getNumberOfRings() == height)
             {
-                displayRing((8 - height + 20), towerPos, tower.atTop());
+                if (!board[tower].atTop().isSelected())
+                {
+                    displayRing((8 - height + 20), towerPos, board[tower].atTop());
+                }
+                else
+                {
+                    fromTower = tower;
+                }
 
-                cout << tower.atTop().getValue();
-                tower.removeRing();
+                cout << board[tower].atTop().getValue();
+                board[tower].removeRing();
             }
             else
             {
@@ -110,14 +118,14 @@ void Graphics::display(TowersOfHanoi::BoardType board)
     }
     cout << endl;
 
-    for (unsigned int tower = 0; tower < _selectedTowerIndices.size(); ++tower) {
-        if (_selectedTowerIndices.front() == tower)
+    for (unsigned int tower = 0; tower < board.size(); ++tower) {
+        if (board[tower].isSelected())
         {
             cout << "^";
             displayMarker(static_cast<int>(tower));
-            if (_fromTower >= 0)
+            if (fromTower >= 0)
             {
-                displayRing(12, static_cast<int>(tower), board[_fromTower].atTop());
+                displayRing(12, static_cast<int>(tower), board[fromTower].atTop());
             }
         }
         else
@@ -141,91 +149,6 @@ void Graphics::displayRing(unsigned int y, int towerPos, Ring ring) const
     SDL_Rect ringRect = {SCREEN_WIDTH / 16 * (3 + towerPos * 5) - halfRingWidth, static_cast<int>(SCREEN_HEIGHT / 32 * y), ringWidth, ringHeight };
     SDL_SetRenderDrawColor(_renderer, ringColor.r, ringColor.g, ringColor.b, ringColor.a );
     SDL_RenderFillRect(_renderer, &ringRect );
-}
-
-void Graphics::selectLeft()
-{
-    std::rotate
-    (
-            _selectedTowerIndices.begin(),
-            _selectedTowerIndices.end() - 1,
-            _selectedTowerIndices.end()
-    );
-}
-
-void Graphics::selectRight()
-{
-    std::rotate
-    (
-            _selectedTowerIndices.begin(),
-            _selectedTowerIndices.begin() + 1,
-            _selectedTowerIndices.end()
-    );
-}
-
-void Graphics::setTower()
-{
-    if (_fromTowerIndex < 0)
-    {
-        _fromTowerIndex = _selectedTowerIndices.front();
-    }
-    else
-    {
-        _toTowerIndex = _selectedTowerIndices.front();
-    }
-}
-
-std::vector<int> Graphics::getMarkedTowerIndices() const
-{
-    std::vector<int> result;
-    if(_fromTowerIndex >= 0)
-    {
-        result.push_back(_fromTowerIndex);
-    }
-
-    if (_toTowerIndex >= 0)
-    {
-        result.push_back(_toTowerIndex);
-    }
-
-    return result;
-}
-
-void Graphics::restoreMarkedTowers(std::vector<int> oldMarkedTowers){
-    if(oldMarkedTowers.size() > 1 && oldMarkedTowers.size() < 2)
-        _fromTowerIndex = oldMarkedTowers[0];
-    else if(oldMarkedTowers.size() == 2) {
-        _fromTowerIndex = oldMarkedTowers[0];
-        _toTowerIndex = oldMarkedTowers[1];
-    }
-}
-
-void Graphics::resetMarkedTowers()
-{
-    _fromTowerIndex = -1;
-    _toTowerIndex = -1;
-}
-
-void Graphics::restoreSelectedTowers(const std::vector<int>& oldSelectedTowers){
-    std::vector<int> temp;
-    for(auto towerIndex: oldSelectedTowers)
-        temp.push_back(towerIndex);
-    _selectedTowerIndices = temp;
-}
-
-std::vector<int> Graphics::getSelectedTowerIndices() {
-    return _selectedTowerIndices;
-}
-
-void Graphics::resetSelectedTower() {
-    while(!(_selectedTowerIndices[0] == 0 && _selectedTowerIndices[1] == 1 && _selectedTowerIndices[2] == 2)) {
-        selectLeft();
-    }
-}
-
-void Graphics::reset() {
-    resetMarkedTowers();
-    resetSelectedTower();
 }
 
 void Graphics::displayWinOrLose(bool winner)

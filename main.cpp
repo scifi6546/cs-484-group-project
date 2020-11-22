@@ -32,26 +32,19 @@ bool eventHandler(SDL_Event &e, TowersOfHanoi & backend, Graphics & frontend)
                 if (e.key.keysym.scancode == SDL_SCANCODE_RETURN)
                 {
                     if(!frontend.getMenuStatus()) {
-                        frontend.setTower();
-                        std::vector<int> markedTowersIndices = frontend.getMarkedTowerIndices(); //Might need to refactor this to include new Tower class
-                        if (markedTowersIndices.size() == 2)
-                        {
-                            backend.moveRing(markedTowersIndices[0], markedTowersIndices[1]);
-                            frontend.resetMarkedTowers();
-                        }
+                        backend.selectRing();
                         frontend.display(backend.getBoard());
                     }
-
                 }
                 else if (e.key.keysym.scancode == SDL_SCANCODE_A)
                 {
-                    frontend.selectLeft();
+                    backend.selectLeft();
                     frontend.display(backend.getBoard());
 
                 }
                 else if (e.key.keysym.scancode == SDL_SCANCODE_D)
                 {
-                    frontend.selectRight();
+                    backend.selectRight();
                     frontend.display(backend.getBoard());
                 }
                 else if(frontend.getMenuStatus()) {

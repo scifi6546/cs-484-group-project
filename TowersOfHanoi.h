@@ -76,14 +76,19 @@ class TowersOfHanoi
         // the first tower on the left
         void selectRight();
 
-        //selectRing
-        //Selects a ring to move from a given tower
-        void selectRing(int tower);
+        // selectRing
+        // Selects a ring to move from a given tower.
+        // If this is the player's second selection,
+        // the ring is moved as well.
+        // If the player tries to make an invalid move,
+        // nothing is changed.
+        void selectRing();
 
     private:
         int _numberOfRings;
         int _numberOfTowers;
-        size_t _selectedTower;
+        long _selectedTower;
+        long _fromTower;
         BoardType _board;
 };
 

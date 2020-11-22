@@ -15,7 +15,6 @@ public:
 
 private:
     int _valueOfRing;
-    bool _selected;
 };
 bool operator==(Ring, Ring);
 
