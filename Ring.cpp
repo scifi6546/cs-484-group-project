@@ -10,15 +10,6 @@ int Ring::getValue() const {
     return _valueOfRing;
 }
 
-bool Ring::isSelected() const
-{
-    return _selected;
-}
-
-void Ring::toggleSelected()
-{
-    _selected = !_selected;
-}
 
 bool operator==(Ring lhs, Ring rhs){
     return lhs.getValue() == rhs.getValue();
