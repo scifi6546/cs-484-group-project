@@ -34,3 +34,13 @@ int Tower::getNumberOfRings() {
 int Tower::getNumberOfRings() const {
     return _rings.size();
 }
+
+bool Tower::isSelected() const
+{
+    return _selected;
+}
+
+void Tower::toggleSelected()
+{
+    _selected = !_selected;
+}

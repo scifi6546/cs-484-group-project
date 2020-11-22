@@ -26,7 +26,12 @@ public:
 
     void removeRing();
 
+    bool isSelected() const;
+
+    void toggleSelected();
+
 private:
     std::stack<Ring> _rings; //This will be have the length of _numberOfRings from TowersOfHanoi
+    bool _selected;
 };
 #endif //TOWERS_OF_HANOI_TOWER_H
