@@ -10,8 +10,12 @@ public:
 
     int getValue() const;
 
+    bool isSelected() const;
+
+    void toggleSelected();
 private:
     int _valueOfRing;
+    bool _selected;
 };
 bool operator==(Ring, Ring);
 
