@@ -71,6 +71,7 @@ void Graphics::display(TowersOfHanoi::BoardType board)
 
     string spaces = "       ";
 
+    auto boardCopy = board; //The big while loop down below trashes the board, save it and restore it after
     vector<unsigned int> heights;
     for (const auto & tower : board)
     {
@@ -84,7 +85,7 @@ void Graphics::display(TowersOfHanoi::BoardType board)
         {
             if (!tower.isEmpty() && tower.getNumberOfRings() == height)
             {
-                displayRing(height, towerPos, tower.atTop());
+                displayRing((8 - height + 20), towerPos, tower.atTop());
 
                 cout << tower.atTop().getValue();
                 tower.removeRing();
@@ -100,6 +101,7 @@ void Graphics::display(TowersOfHanoi::BoardType board)
         --height;
         cout << endl;
     }
+    board = boardCopy;
 
     for (int tower = 0; tower < board.size(); tower++)
     {
@@ -113,6 +115,10 @@ void Graphics::display(TowersOfHanoi::BoardType board)
         {
             cout << "^";
             displayMarker(static_cast<int>(tower));
+            if (_fromTower >= 0)
+            {
+                displayRing(12, static_cast<int>(tower), board[_fromTower].atTop());
+            }
         }
         else
         {
@@ -124,7 +130,7 @@ void Graphics::display(TowersOfHanoi::BoardType board)
     SDL_RenderPresent(_renderer);
 }
 
-void Graphics::displayRing(unsigned int height, int towerPos, Ring ring) const
+void Graphics::displayRing(unsigned int y, int towerPos, Ring ring) const
 {
     SDL_Color ringColor = {0x74, 0x43, 0x00, 0xFF};
     int maxRingWidth = SCREEN_WIDTH / 4;
@@ -132,7 +138,7 @@ void Graphics::displayRing(unsigned int height, int towerPos, Ring ring) const
     int halfRingWidth = ringWidth / 2;
     int ringHeight = SCREEN_HEIGHT / 32;
 
-    SDL_Rect ringRect = {SCREEN_WIDTH / 16 * (3 + towerPos * 5) - halfRingWidth, static_cast<int>(SCREEN_HEIGHT / 32 * (8 - height + 20)), ringWidth, ringHeight };
+    SDL_Rect ringRect = {SCREEN_WIDTH / 16 * (3 + towerPos * 5) - halfRingWidth, static_cast<int>(SCREEN_HEIGHT / 32 * y), ringWidth, ringHeight };
     SDL_SetRenderDrawColor(_renderer, ringColor.r, ringColor.g, ringColor.b, ringColor.a );
     SDL_RenderFillRect(_renderer, &ringRect );
 }
