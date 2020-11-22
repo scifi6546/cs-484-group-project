@@ -60,9 +60,26 @@ class TowersOfHanoi
         // Returns a copy of the board
         BoardType getBoard();
 
+        // selectLeft
+        // Selects the tower to the left of the
+        // previously selected tower, or wraps back to
+        // the last tower on the right
+        void selectLeft();
+
+        // selectRight
+        // Selects the tower to the right of the
+        // previously selected tower, or wraps back to
+        // the first tower on the left
+        void selectRight();
+
+        //selectRing
+        //Selects a ring to move from a given tower
+        void selectRing(int tower);
+
     private:
         int _numberOfRings;
         int _numberOfTowers;
+        size_t _selectedTower;
         BoardType _board;
 };
 

@@ -19,7 +19,7 @@ TowersOfHanoi::TowersOfHanoi(): TowersOfHanoi(8, 3)
 {}
 
 TowersOfHanoi::TowersOfHanoi(int numOfRings, int numOfTowers)
-    : _numberOfRings(numOfRings), _numberOfTowers(numOfTowers), _board(numOfTowers)
+    : _numberOfRings(numOfRings), _numberOfTowers(numOfTowers), _selectedTower(0), _board(numOfTowers)
 {
     for (int index = 0; index < _board.size(); index++) {
         if (index == 0) {
@@ -115,4 +115,39 @@ bool TowersOfHanoi::winner()
 TowersOfHanoi::BoardType TowersOfHanoi::getBoard()
 {
     return _board;
+}
+
+void TowersOfHanoi::selectRing(int tower)
+{
+    _board[tower].atTop().select();
+}
+
+void TowersOfHanoi::selectRight()
+{
+    _board[_selectedTower].deselect();
+    if (_selectedTower + 1 >= _board.size())
+    {
+        _selectedTower = 0;
+    }
+    else
+    {
+        _selectedTower++;
+    }
+
+    _board[_selectedTower].select();
+}
+
+void TowersOfHanoi::selectLeft()
+{
+    _board[_selectedTower].deselect();
+    if (_selectedTower - 1 < 0)
+    {
+        _selectedTower = _board.size() - 1;
+    }
+    else
+    {
+        _selectedTower--;
+    }
+
+    _board[_selectedTower].select();
 }
