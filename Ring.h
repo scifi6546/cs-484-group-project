@@ -4,15 +4,15 @@
 
 #ifndef TOWERS_OF_HANOI_RING_H
 #define TOWERS_OF_HANOI_RING_H
-class Ring{
+
+#include "Selectable.h"
+
+class Ring : public Selectable {
 public:
     explicit Ring(int);
 
     int getValue() const;
 
-    bool isSelected() const;
-
-    void toggleSelected();
 private:
     int _valueOfRing;
     bool _selected;

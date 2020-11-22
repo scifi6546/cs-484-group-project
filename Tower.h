@@ -5,10 +5,11 @@
 #ifndef TOWERS_OF_HANOI_TOWER_H
 #define TOWERS_OF_HANOI_TOWER_H
 #include "Ring.h"
+#include "Selectable.h"
 #include <vector>
 #include <stack>
 
-class Tower {
+class Tower : public Selectable {
 public:
     Tower();
 
@@ -25,10 +26,6 @@ public:
     Ring atTop();
 
     void removeRing();
-
-    bool isSelected() const;
-
-    void toggleSelected();
 
 private:
     std::stack<Ring> _rings; //This will be have the length of _numberOfRings from TowersOfHanoi
