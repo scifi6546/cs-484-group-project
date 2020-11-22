@@ -61,7 +61,7 @@ private:
     int _fromTower;
     int _toTower;
 
-    void displayRing(unsigned int height, int towerPos, Ring ring) const;
+    void displayRing(unsigned int y, int towerPos, Ring ring) const;
 };
 
 #endif //TOWERS_OF_HANOI_GRAPHICS_H
