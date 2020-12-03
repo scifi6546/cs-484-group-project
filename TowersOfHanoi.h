@@ -8,6 +8,8 @@
 #include <vector>
 #include "Tower.h"
 #include "Ring.h"
+#include <map>
+
 
 // TowersOfHanoi
 // A class that can be used to play Towers of Hanoi
@@ -59,6 +61,10 @@ class TowersOfHanoi
 //        void printBoard();
 
         BoardType getBoard();
+
+        void restoreOldBoard(std::map<int, std::vector<int>>);
+
+
 
     private:
 

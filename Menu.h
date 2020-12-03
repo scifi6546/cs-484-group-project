@@ -12,7 +12,7 @@ public:
 
     void closeMenuScreen();
 
-    bool getMenuStatus();
+    bool getMenuStatus() const;
 
     void setMenuStatus(bool);
 private:

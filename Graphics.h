@@ -31,9 +31,19 @@ public:
 
     void displayWinOrLose(bool winner);
 
-    [[nodiscard]] std::vector<unsigned int> getMarkedTowers() const;
+    [[nodiscard]] std::vector<int> getMarkedTowerIndices() const;
+
+    std::vector<int> getSelectedTowerIndices();
+
+    void restoreSelectedTowers(const std::vector<int>& oldSelectedTowers);
+
+    void restoreMarkedTowers(std::vector<int>);
 
     void resetMarkedTowers();
+
+    void resetSelectedTower();
+
+    void reset();
 
     void displayMenu();
 
@@ -45,17 +55,19 @@ public:
 
     void printInstructions();
 
+    void printMenu();
+
+
     SDL_Texture * loadTexture(const std::string &path);
 
 private:
     SDL_Window * _window = nullptr;
-    SDL_Surface * _screenSurface = nullptr;
     std::map<std::string, SDL_Texture *> textures{};
     SDL_Renderer * _renderer = nullptr;
     Menu _menu;
-    std::vector<int> _selectedTower;
-    int _fromTower;
-    int _toTower;
+    std::vector<int> _selectedTowerIndices;
+    int _fromTowerIndex;
+    int _toTowerIndex;
 
 };
 

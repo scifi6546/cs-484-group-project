@@ -4,16 +4,7 @@
 
 #include "TowersOfHanoi.h"
 #include <vector>
-#include <stack>
-#include <iostream>
-#include <string>
 #include <algorithm>
-
-using std::vector;
-using std::stack;
-using std::cout;
-using std::endl;
-using std::string;
 
 TowersOfHanoi::TowersOfHanoi(): TowersOfHanoi(8, 3)
 {}
@@ -73,6 +64,15 @@ bool TowersOfHanoi::winner()
 
     return false;
 }
+
+void TowersOfHanoi::restoreOldBoard(std::map<int, std::vector<int>> savedData){
+    BoardType loadingBoard(savedData.size());
+    for(int i = 0; i < savedData.size(); i++) {
+        loadingBoard[i] = Tower(savedData[i].size(), savedData[i]);
+    }
+    _board = loadingBoard;
+}
+
 
 //void TowersOfHanoi::printBoard()
 //{

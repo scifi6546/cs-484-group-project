@@ -1,5 +1,5 @@
 //
-// Created by renew on 11/6/2020.
+// Created by Tailon on 11/6/2020.
 //
 
 #ifndef TOWERS_OF_HANOI_TOWER_H
@@ -14,6 +14,8 @@ public:
 
     explicit Tower(int);
 
+    Tower(int, std::vector<int>);
+
     int getNumberOfRings();
 
     [[nodiscard]] int getNumberOfRings() const;
@@ -25,6 +27,8 @@ public:
     Ring atTop();
 
     void removeRing();
+
+    std::stack<Ring> getRings();
 
 private:
     std::stack<Ring> _rings; //This will be have the length of _numberOfRings from TowersOfHanoi

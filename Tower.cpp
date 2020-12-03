@@ -1,5 +1,5 @@
 //
-// Created by renew on 11/6/2020.
+// Created by Tailon on 11/6/2020.
 //
 
 #include "Tower.h"
@@ -8,6 +8,12 @@ Tower::Tower(): Tower(8) {}
 Tower::Tower(int numberOfRings) {
     for (int index = numberOfRings; index > 0; --index) {
         _rings.push(Ring(index));
+    }
+}
+
+Tower::Tower(int numberOfRings, std::vector<int> values) {
+    for (int index = numberOfRings-1; index >= 0; --index) {
+        _rings.push(Ring(values[index]));
     }
 }
 
@@ -33,4 +39,8 @@ int Tower::getNumberOfRings() {
 
 int Tower::getNumberOfRings() const {
     return _rings.size();
+}
+
+std::stack<Ring> Tower::getRings() {
+    return _rings;
 }
