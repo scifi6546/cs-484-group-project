@@ -62,8 +62,6 @@ class TowersOfHanoi
         // Returns a copy of the board
         BoardType getBoard();
 
-        void restoreOldBoard(std::map<int, std::vector<int>>);
-
         // selectLeft
         // Selects the tower to the left of the
         // previously selected tower, or wraps back to
@@ -84,6 +82,11 @@ class TowersOfHanoi
         // nothing is changed.
         void selectRing();
 
+        void restoreOldBoard(std::map<int, std::vector<int>>);
+
+        long getSelectedTower();
+
+        long getMarkedTower();
     private:
         int _numberOfRings;
         int _numberOfTowers;

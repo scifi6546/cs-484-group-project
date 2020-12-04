@@ -175,3 +175,13 @@ void TowersOfHanoi::selectLeft()
 
     _board[_selectedTower].select();
 }
+
+long TowersOfHanoi::getSelectedTower()
+{
+    return _selectedTower;
+}
+
+long TowersOfHanoi::getMarkedTower()
+{
+    return _fromTower;
+}
