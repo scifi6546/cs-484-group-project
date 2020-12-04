@@ -10,6 +10,9 @@
 #include "TowersOfHanoi.h"
 #include "SDL.h"
 #include "Menu.h"
+#define GL_GLEXT_PROTOTYPES
+#include <SDL.h>
+#include <SDL_opengl.h>
 
 class Graphics
 {
@@ -57,18 +60,15 @@ public:
 
     void printMenu();
 
-
-    SDL_Texture * loadTexture(const std::string &path);
-
 private:
     SDL_Window * _window = nullptr;
     std::map<std::string, SDL_Texture *> textures{};
-    SDL_Renderer * _renderer = nullptr;
+    //SDL_Renderer * _renderer = nullptr;
     Menu _menu;
     std::vector<int> _selectedTowerIndices;
     int _fromTowerIndex;
     int _toTowerIndex;
-
+    SDL_GLContext context;
 };
 
 #endif //TOWERS_OF_HANOI_GRAPHICS_H

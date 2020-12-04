@@ -10,7 +10,6 @@
 #include "Graphics.h"
 #include <SDL_image.h>
 
-
 using std::string;
 using std::vector;
 using std::cout;
@@ -25,23 +24,10 @@ Graphics::Graphics(const std::string& windowName) : _selectedTowerIndices{0, 1, 
     }
     else
     {
-        _renderer = SDL_CreateRenderer( _window, -1, SDL_RENDERER_ACCELERATED );
-        if (!_renderer)
-        {
-            cout << "Renderer not created! Error: " << SDL_GetError() << endl;
-        }
-        else
-        {
-            int imgFlags = IMG_INIT_PNG;
-            if (!(IMG_Init(imgFlags) & imgFlags))
-            {
-                cout << "Could not imitialize SDL_image: " << IMG_GetError() << endl;
-            }
-        }
+
     }
 
-    textures.insert({"instructions", loadTexture("./media/instructions.png")});
-    textures.insert({"pauseScreen", loadTexture("./media/pauseScreen.png")});
+    
 }
 
 Graphics::~Graphics()
@@ -52,16 +38,12 @@ Graphics::~Graphics()
         texture = nullptr;
     }
 
-    SDL_DestroyRenderer(_renderer);
-    _renderer = nullptr;
     SDL_DestroyWindow(_window);
     _window = nullptr;
 }
 
 void Graphics::display(TowersOfHanoi::BoardType board)
 {
-    SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 0xFF);
-    SDL_RenderClear(_renderer);
 
     printInstructions();
     cout << endl;
@@ -111,8 +93,6 @@ void Graphics::display(TowersOfHanoi::BoardType board)
         }
     }
     cout << endl;
-
-    SDL_RenderPresent(_renderer);
 }
 
 void Graphics::selectLeft()
@@ -233,36 +213,13 @@ void Graphics::printInstructions()
     cout << "ENTER again to put it on a tower" << endl;
     cout << "A and D to move left and right" << endl;
 
-    SDL_RenderCopy(_renderer, textures.at("instructions"), nullptr, nullptr);
+  
 }
 
 void Graphics::printMenu()
 {
-    SDL_RenderClear(_renderer);
-    SDL_RenderCopy(_renderer, textures.at("pauseScreen"), nullptr, nullptr);
-    SDL_RenderPresent(_renderer);
+   
+
 
 }
 
-SDL_Texture * Graphics::loadTexture(const std::string& path )
-{
-    SDL_Texture * texture = nullptr;
-
-    SDL_Surface * loadedSurface = IMG_Load( path.c_str() );
-    if( loadedSurface == nullptr )
-    {
-        cout << "Unable to load image " << path << ": " << IMG_GetError() << endl;
-    }
-    else
-    {
-        texture = SDL_CreateTextureFromSurface(_renderer, loadedSurface);
-        if( texture == nullptr )
-        {
-            cout << "Unable to create texture from " << path << ": " << SDL_GetError() << endl;
-        }
-
-        SDL_FreeSurface( loadedSurface );
-    }
-
-    return texture;
-}
