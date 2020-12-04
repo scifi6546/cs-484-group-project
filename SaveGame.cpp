@@ -30,7 +30,10 @@
          gameDataBackend[index] = getRingValues(tower);
          index++;
      }
-     std::vector<std::vector<int>> gameDataFrontend = {frontend.getSelectedTowerIndices(), frontend.getMarkedTowerIndices()};
+
+     long selectedTower = backend.getSelectedTower();
+     long markedTower = backend.getMarkedTower();
+
      // Passing all the variables inside the vector from the beginning of the vector to the end.
      std::ofstream stream("gameData.txt");
 
@@ -40,11 +43,10 @@
              stream << "\t" << item << "\n";
      }
 
-     for(const auto& item: gameDataFrontend) {
-         stream << ",\n";
-         for(auto element: item)
-             stream << std::to_string(element) << "\n";
-     }
+     stream << ",\n";
+     stream << std::to_string(selectedTower) << "\n";
+     stream << ",\n";
+     stream << std::to_string(markedTower) << "\n";
      stream.close();
 
 //     printSavedItems(_saveOrder);

@@ -40,7 +40,7 @@ void LoadGame::LoadSavedData() {
     while ( std::getline(input_file, tempVar) ){  //get selected towers
         if (tempVar != ",")
         {
-            oldSelectedTowers.push_back(std::stoi(tempVar));
+            oldSelectedTower = std::stoi(tempVar);
             std::cout << "tempVar now: " << tempVar << std::endl;
 
         }
@@ -53,7 +53,7 @@ void LoadGame::LoadSavedData() {
     while ( std::getline(input_file, tempVar) ){ //get marked towers
         if (tempVar != ",")
         {
-            oldMarkedTowers.push_back(std::stoi(tempVar));
+            oldMarkedTower = std::stoi(tempVar);
             std::cout << "tempVar now: " << tempVar << std::endl;
 
         }

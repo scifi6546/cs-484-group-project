@@ -53,7 +53,6 @@ bool eventHandler(SDL_Event &e, TowersOfHanoi & backend, Graphics & frontend)
                         std::cout << "You selected N" << std::endl;
                         frontend.closeMenu();
                         backend.resetGame();
-                        frontend.reset();
                         frontend.display(backend.getBoard());
                     }
                     else if (e.key.keysym.scancode == SDL_SCANCODE_L)
@@ -61,8 +60,8 @@ bool eventHandler(SDL_Event &e, TowersOfHanoi & backend, Graphics & frontend)
                         LoadGame restoreGame;
                         restoreGame.LoadSavedData();
                         backend.restoreOldBoard(restoreGame.oldBoard);
-                        frontend.restoreMarkedTowers(restoreGame.oldMarkedTowers);
-                        frontend.restoreSelectedTowers(restoreGame.oldSelectedTowers);
+                        backend.setMarkedTower(restoreGame.oldMarkedTower);
+                        backend.setSelectedTower(restoreGame.oldSelectedTower);
                         frontend.display(backend.getBoard());
                     }
                     else if (e.key.keysym.scancode == SDL_SCANCODE_S)

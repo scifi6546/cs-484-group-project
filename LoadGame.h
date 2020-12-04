@@ -11,8 +11,8 @@ class LoadGame {
 public:
     void LoadSavedData();
     std::map<int, std::vector<int>> oldBoard;
-    std::vector<int> oldSelectedTowers;
-    std::vector<int> oldMarkedTowers;
+    long oldSelectedTower;
+    long oldMarkedTower;
 
 };
 #endif //TOWERS_OF_HANOI_LOADGAME_H
