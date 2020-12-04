@@ -185,3 +185,13 @@ long TowersOfHanoi::getMarkedTower()
 {
     return _fromTower;
 }
+
+void TowersOfHanoi::setSelectedTower(long towerIndex)
+{
+    _selectedTower = towerIndex;
+}
+
+void TowersOfHanoi::setMarkedTower(long towerIndex)
+{
+    _fromTower = towerIndex;
+}

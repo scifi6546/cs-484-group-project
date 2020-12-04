@@ -86,7 +86,11 @@ class TowersOfHanoi
 
         long getSelectedTower();
 
+        void setSelectedTower(long towerIndex);
+
         long getMarkedTower();
+
+        void setMarkedTower(long towerIndex);
     private:
         int _numberOfRings;
         int _numberOfTowers;
