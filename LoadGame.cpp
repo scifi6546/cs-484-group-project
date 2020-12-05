@@ -36,29 +36,23 @@ void LoadGame::LoadSavedData() {
             break;
         }
     }
-    std::cout << "Get selected towers" << std::endl;
     while ( std::getline(input_file, tempVar) ){  //get selected towers
         if (tempVar != ",")
         {
             oldSelectedTower = std::stoi(tempVar);
-            std::cout << "tempVar now: " << tempVar << std::endl;
 
         }
         else {
-            std::cout << "You encountered a comma" << std::endl;
             break;
         }
     }
-    std::cout << "Get marked towers" << std::endl;
     while ( std::getline(input_file, tempVar) ){ //get marked towers
         if (tempVar != ",")
         {
             oldMarkedTower = std::stoi(tempVar);
-            std::cout << "tempVar now: " << tempVar << std::endl;
 
         }
         else {
-            std::cout << "You encountered a comma" << std::endl;
             break;
         }
     }

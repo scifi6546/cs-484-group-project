@@ -77,45 +77,6 @@ void TowersOfHanoi::restoreOldBoard(std::map<int, std::vector<int>> savedData){
     _board = loadingBoard;
 }
 
-
-//void TowersOfHanoi::printBoard()
-//{
-//    BoardType board = _board;
-//    string spaces = "       ";
-//
-//    vector<unsigned int> heights;
-//    for (const auto & tower : board)
-//    {
-//        heights.push_back(tower.getNumberOfRings());
-//    }
-//    unsigned int height = *std::max_element(heights.begin(), heights.end());
-//    while(!std::all_of(board.begin(), board.end(), [](auto a) {return a.isEmpty();}))
-//    {
-//        for (auto & tower : board)
-//        {
-//            if (!tower.isEmpty() && tower.getNumberOfRings() == height)
-//            {
-//                cout << tower.atTop().getValue();
-//                tower.removeRing();
-//            }
-//            else
-//            {
-//                cout << " ";
-//            }
-//            cout << spaces;
-//        }
-//        --height;
-//        cout << endl;
-//    }
-//
-//    for (int tower = 0; tower < board.size(); tower++)
-//    {
-//        cout << "-";
-//        cout << spaces;
-//    }
-//    cout << endl;
-//}
-
 TowersOfHanoi::BoardType TowersOfHanoi::getBoard()
 {
     return _board;

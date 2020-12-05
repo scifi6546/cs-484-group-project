@@ -10,39 +10,33 @@
 #include "Graphics.h"
 #include <SDL_image.h>
 
-
-using std::string;
-using std::vector;
-using std::cout;
-using std::endl;
-
 Graphics::Graphics(const std::string& windowName)
 {
     _window = SDL_CreateWindow(windowName.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     if (_window == nullptr)
     {
-        cout << "Window not created! Error: " << SDL_GetError() << endl;
+        std::cout << "Window not created! Error: " << SDL_GetError() << std::endl;
     }
     else
     {
         _renderer = SDL_CreateRenderer( _window, -1, SDL_RENDERER_ACCELERATED );
         if (!_renderer)
         {
-            cout << "Renderer not created! Error: " << SDL_GetError() << endl;
+            std::cout << "Renderer not created! Error: " << SDL_GetError() << std::endl;
         }
         else
         {
             int imgFlags = IMG_INIT_PNG;
             if (!(IMG_Init(imgFlags) & imgFlags))
             {
-                cout << "Could not imitialize SDL_image: " << IMG_GetError() << endl;
+                std::cout << "Could not imitialize SDL_image: " << IMG_GetError() << std::endl;
             }
         }
     }
 
-    textures.insert({"instructions", loadTexture("../media/instructions.png")});
-    textures.insert({"marker", loadTexture("../media/marker.png")});
     textures.insert({"pauseScreen", loadTexture("./media/pauseScreen.png")});
+    textures.insert({"instructions", loadTexture("./media/instructions.png")});
+    textures.insert({"marker", loadTexture("./media/marker.png")});
 }
 
 Graphics::~Graphics()
@@ -68,11 +62,11 @@ void Graphics::display(TowersOfHanoi::BoardType board)
 
     displayBoard();
 
-    string spaces = "       ";
+    std::string spaces = "       ";
 
     long fromTower = -1;
     auto boardCopy = board; //The big while loop down below trashes the board, save it and restore it after
-    vector<unsigned int> heights;
+    std::vector<unsigned int> heights;
     for (const auto & tower : board)
     {
         heights.push_back(tower.getNumberOfRings());
@@ -134,11 +128,11 @@ void Graphics::displayWinOrLose(bool winner)
 {
     if (winner)
     {
-        cout << "You won!" << endl;
+        std::cout << "You won!" << std::endl;
     }
     else
     {
-        cout << "You haven't won yet, keep going!" << endl;
+        std::cout << "You haven't won yet, keep going!" << std::endl;
     }
 }
 
@@ -177,14 +171,14 @@ SDL_Texture * Graphics::loadTexture(const std::string& path )
     SDL_Surface * loadedSurface = IMG_Load( path.c_str() );
     if( loadedSurface == nullptr )
     {
-        cout << "Unable to load image " << path << ": " << IMG_GetError() << endl;
+        std::cout << "Unable to load image " << path << ": " << IMG_GetError() << std::endl;
     }
     else
     {
         texture = SDL_CreateTextureFromSurface(_renderer, loadedSurface);
         if( texture == nullptr )
         {
-            cout << "Unable to create texture from " << path << ": " << SDL_GetError() << endl;
+            std::cout << "Unable to create texture from " << path << ": " << SDL_GetError() << std::endl;
         }
 
         SDL_FreeSurface( loadedSurface );

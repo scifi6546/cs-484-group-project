@@ -6,9 +6,6 @@
 #include "SaveGame.h"
 #include "LoadGame.h"
 
-using std::cout;
-using std::endl;
-
 bool eventHandler(SDL_Event &e, TowersOfHanoi & backend, Graphics & frontend)
 {
     while(SDL_PollEvent(&e) != 0)
@@ -87,7 +84,7 @@ int main(int, char**) {
 
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
-        cout << "SDL could not initialize! Error: " << SDL_GetError() << endl;
+        std::cout << "SDL could not initialize! Error: " << SDL_GetError() << std::endl;
     }
     else
     {
@@ -96,6 +93,7 @@ int main(int, char**) {
         graphics.displayMenu();
         SDL_Event e;
         graphics.display(backend.getBoard());
+        graphics.printMenu();
         while(!eventHandler(e, backend, graphics)) {}
     }
 
