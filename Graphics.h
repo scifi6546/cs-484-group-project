@@ -68,7 +68,7 @@ private:
     std::vector<int> _selectedTowerIndices;
     int _fromTowerIndex;
     int _toTowerIndex;
-    SDL_GLContext context;
+    SDL_GLContext _glcontext;
 };
 
 #endif //TOWERS_OF_HANOI_GRAPHICS_H
